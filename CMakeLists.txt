@@ -1,0 +1,11 @@
+cmake_minimum_required(VERSION 3.18)
+project(strip VERSION 0.0.1 LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+set(JSONTOOLKIT_JSONL OFF CACHE BOOL "no JSONL")
+add_subdirectory(vendor/jsontoolkit)
+add_executable(strip strip.cc)
+target_link_libraries(strip PRIVATE sourcemeta::jsontoolkit::json)
+target_link_libraries(strip PRIVATE sourcemeta::jsontoolkit::jsonschema)
