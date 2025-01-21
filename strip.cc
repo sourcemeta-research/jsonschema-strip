@@ -27,6 +27,10 @@ int main(int argc, char* argv[]) {
 
     auto &subschema{get(schema, entry.second.pointer)};
 
+    if (!subschema.is_object()) {
+      continue;
+    }
+
     for (const auto &property : subschema.as_object()) {
       const auto keyword_type{sourcemeta::jsontoolkit::default_schema_walker(
             property.first, frame.vocabularies(entry.second,
