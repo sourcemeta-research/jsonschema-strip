@@ -20,6 +20,8 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: gh release delete latest --cleanup-tag || git push --delete origin latest
         continue-on-error: true
+      - name: Rename the binary
+        run: mv ./build/strip ./build/jsonschema-strip-x86_64-unknown-linux-gnu
       - name: Release the new binary
         if: github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v2
@@ -33,4 +35,4 @@ jobs:
 
             Commit message:
             ${{ github.event.head_commit.message }}
-          files: build/strip
+          files: build/jsonschema-strip-x86_64-unknown-linux-gnu
