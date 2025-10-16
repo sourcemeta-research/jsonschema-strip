@@ -13,6 +13,12 @@ jobs:
         run: |
           cmake -S . -B ./build -DCMAKE_BUILD_TYPE:STRING=Release
           cmake --build ./build --config Release --target strip
+      - name: Delete previous release/tag
+        if: github.ref == 'refs/heads/main'
+        run: gh release delete latest --cleanup-tag || git push --delete origin latest
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Release the new binary
         if: github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v2
