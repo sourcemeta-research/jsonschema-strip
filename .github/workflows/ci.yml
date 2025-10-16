@@ -18,6 +18,8 @@ jobs:
           cmake --build ./build --config Release --target strip
       - name: Delete previous release/tag
         if: github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: gh release delete latest --cleanup-tag || git push --delete origin latest
         continue-on-error: true
       - name: Rename the binary
